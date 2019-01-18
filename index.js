@@ -1,10 +1,13 @@
 'use strict';
 
 const STORE = [
-  {name: 'apples', checked: false},
-  {name: 'oranges', checked: false},
-  {name: 'milk', checked: true},
-  {name: 'bread', checked: false}
+  {items:[
+    {name: 'apples', checked: false},
+    {name: 'oranges', checked: false},
+    {name: 'milk', checked: true},
+    {name: 'bread', checked: false},]
+  },
+  {completedCheck: false,}
 ];
 
 
@@ -45,7 +48,7 @@ function renderShoppingList() {
 
 function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
-  STORE.push({name: itemName, checked: false});
+  STORE.itemspush({name: itemName, checked: false});
 }
 
 function handleNewItemSubmit() {
@@ -60,13 +63,13 @@ function handleNewItemSubmit() {
 }
 
 function toggleCheckedForListItem(itemIndex) {
-  STORE[itemIndex].checked = !STORE[itemIndex].checked;
+  STORE.items[itemIndex].checked = !STORE.items[itemIndex].checked;
 }
 
 
 function deleteListItem(itemIndex) {
   
-  delete STORE[itemIndex];
+  delete STORE.items[itemIndex];
 }
 
 
