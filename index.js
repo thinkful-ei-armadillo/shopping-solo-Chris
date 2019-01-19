@@ -121,5 +121,5 @@ function handleShoppingList() {
   handleCompletedItems(); 
 }
 
-
+//testing credentials
 $(handleShoppingList);
