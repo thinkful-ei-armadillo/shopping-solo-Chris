@@ -121,5 +121,5 @@ function handleShoppingList() {
   handleCompletedItems(); 
 }
 
-//test
+
 $(handleShoppingList);
