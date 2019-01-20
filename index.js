@@ -35,15 +35,18 @@ function generateItemElement(item, itemIndex, template) {
 
 
 function generateShoppingItemsString(shoppingList) {
-  const items = shoppingList.map((item, index) => generateItemElement(item, index));
+  let items = shoppingList;
+  if(STORE.completedCheck){
+    items = STORE.items.filter(function(item){
+      return item.checked === false;
+    });
+  }
+  items = items.map((item, index) => generateItemElement(item, index));  
   return items.join('');
 }
 
-function renderShoppingList(items) {
-  if(!items){
-    items = STORE.items;
-  }
-  const shoppingListItemsString = generateShoppingItemsString(items);
+function renderShoppingList() {
+  const shoppingListItemsString = generateShoppingItemsString(STORE.items);
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
@@ -101,17 +104,9 @@ function handleDeleteItemClicked() {
 function handleCompletedItems(){
   $('#completed-check').on('click', ()=> {
     completedCheckToggle(); 
-    if(STORE.completedCheck === true){
-      const uncompletedItems = STORE.items.filter(function(store){
-        return store.checked === false;});
-      renderShoppingList(uncompletedItems);
-    }
-    else{
-      renderShoppingList(); 
-    }     
+    renderShoppingList();    
   });
 }
-
 
 function handleShoppingList() {
   renderShoppingList();
