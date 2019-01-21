@@ -10,9 +10,11 @@ const STORE =
   completedCheck: false
   };
 
+//event listener to grab the input from the field
+//if statement in generateShoppingItemString to apply new array
+//HTML to create box
 
-//display only items that are unchecked
-//function with an event listener targeted on check box which will display only the items with checked as false
+
 function completedCheckToggle(){
   STORE.completedCheck = !STORE.completedCheck;
 }
@@ -24,10 +26,10 @@ function generateItemElement(item, itemIndex, template) {
       <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
       <div class="shopping-item-controls">
         <button class="shopping-item-toggle js-item-toggle">
-            <span class="button-label">check</span>
+          <span class="button-label">check</span>
         </button>
         <button class="shopping-item-delete js-item-delete">
-            <span class="button-label">delete</span>
+          <span class="button-label">delete</span>
         </button>
       </div>
     </li>`;
