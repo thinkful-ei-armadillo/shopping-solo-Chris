@@ -17,9 +17,9 @@ function generateItemElement(item, itemIndex, template) {
       <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
       <div class="shopping-item-controls">
         <div>
-          <form id= "js-edit-entry-form">
+          <form id="js-edit-entry-form">
             <label for="edit-entry">Change Name</label>
-            <input type="text" name="edit-entry" class="js-edit-entry placeholder= "${item.name}">
+            <input type="text" name="edit-entry" class="js-edit-entry" placeholder= "${item.name}">
             <button type= "submit">Edit</button>
         </div>
         <button class="shopping-item-toggle js-item-toggle">
@@ -127,10 +127,25 @@ function handleSearch (){
   });
 }
 
+function applyEditToStore(name, index){
+  STORE['items'][index] = {name: name, checked: false};
+}
+//target .js-edit-entry-form 
+//prevent default 
+//index = getItemIndexFromElement(event.target)
+//modify entry at that index - separate function 
+//render 
+function handleEditItem(){
+  $('#js-edit-entry-form').submit(function(event){
+    event.preventDefault(); 
+    const editName = $('.js-edit-entry').val();
+    $('.js-edit-entry').val(''); 
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    applyEditToStore(editName, itemIndex); 
+    renderShoppingList(); 
+  });
+}
 
-//create an edit button
-//create an input field
-//change the store to reflect input using index
 
 function handleShoppingList() {
   renderShoppingList();
@@ -139,6 +154,7 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleCompletedItems(); 
   handleSearch(); 
+  handleEditItem(); 
 }
 
 
