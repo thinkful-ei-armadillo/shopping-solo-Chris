@@ -9,15 +9,13 @@ const STORE =
   
   completedCheck: false
   };
-
+ 
 //event listener to grab the input from the field
 //if statement in generateShoppingItemString to apply new array
 //HTML to create box
 
 
-function completedCheckToggle(){
-  STORE.completedCheck = !STORE.completedCheck;
-}
+
 
 
 function generateItemElement(item, itemIndex, template) {
@@ -37,18 +35,18 @@ function generateItemElement(item, itemIndex, template) {
 
 
 function generateShoppingItemsString(shoppingList) {
-  let items = shoppingList;
   if(STORE.completedCheck){
-    items = STORE.items.filter(function(item){
+    shoppingList = shoppingList.filter(function(item){
       return item.checked === false;
     });
   }
-  items = items.map((item, index) => generateItemElement(item, index));  
-  return items.join('');
+  shoppingList = shoppingList.map((item, index) => generateItemElement(item, index));  
+  return shoppingList.join('');
 }
 
-function renderShoppingList() {
-  const shoppingListItemsString = generateShoppingItemsString(STORE.items);
+
+function renderShoppingList(items = STORE.items) {
+  const shoppingListItemsString = generateShoppingItemsString(items);
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
@@ -69,20 +67,16 @@ function handleNewItemSubmit() {
 }
 
 
-function toggleCheckedForListItem(itemIndex) {
-  STORE.items[itemIndex].checked = !STORE.items[itemIndex].checked;
-}
-
-function deleteListItem(itemIndex) {
-  delete STORE.items[itemIndex];
-}
-
-
 function getItemIndexFromElement(item) {
   const itemIndexString = $(item)
     .closest('.js-item-index-element')
     .attr('data-item-index');
   return parseInt(itemIndexString, 10);
+}
+
+
+function toggleCheckedForListItem(itemIndex) {
+  STORE.items[itemIndex].checked = !STORE.items[itemIndex].checked;
 }
 
 
@@ -95,6 +89,11 @@ function handleItemCheckClicked() {
 }
 
 
+function deleteListItem(itemIndex) {
+  delete STORE.items[itemIndex];
+}
+
+
 function handleDeleteItemClicked() {
   $('.js-shopping-list').on('click', '.js-item-delete', event => {
     const itemIndex = getItemIndexFromElement(event.currentTarget);
@@ -103,10 +102,29 @@ function handleDeleteItemClicked() {
   });
 }
 
+
+function completedCheckToggle(){
+  STORE.completedCheck = !STORE.completedCheck;
+}
+
+
 function handleCompletedItems(){
   $('#completed-check').on('click', ()=> {
     completedCheckToggle(); 
     renderShoppingList();    
+  });
+}
+
+
+function handleSearch (){
+  $('#js-search-entry-form').submit(function(event) {
+    event.preventDefault();
+    const searchItemName = $('.js-search-list-entry').val();
+    $('.js-search-list-entry').val(''); 
+    let search = STORE.items.filter(function(item){
+      return item.name === searchItemName;   
+    });
+    renderShoppingList(search);
   });
 }
 
@@ -116,6 +134,7 @@ function handleShoppingList() {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleCompletedItems(); 
+  handleSearch(); 
 }
 
 
