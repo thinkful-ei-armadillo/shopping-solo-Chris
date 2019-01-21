@@ -9,13 +9,6 @@ const STORE =
   
   completedCheck: false
   };
- 
-//event listener to grab the input from the field
-//if statement in generateShoppingItemString to apply new array
-//HTML to create box
-
-
-
 
 
 function generateItemElement(item, itemIndex, template) {
@@ -23,6 +16,12 @@ function generateItemElement(item, itemIndex, template) {
     <li class="js-item-index-element" data-item-index="${itemIndex}">
       <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
       <div class="shopping-item-controls">
+        <div>
+          <form id= "js-edit-entry-form">
+            <label for="edit-entry">Change Name</label>
+            <input type="text" name="edit-entry" class="js-edit-entry placeholder= "${item.name}">
+            <button type= "submit">Edit</button>
+        </div>
         <button class="shopping-item-toggle js-item-toggle">
           <span class="button-label">check</span>
         </button>
@@ -127,6 +126,11 @@ function handleSearch (){
     renderShoppingList(search);
   });
 }
+
+
+//create an edit button
+//create an input field
+//change the store to reflect input using index
 
 function handleShoppingList() {
   renderShoppingList();
